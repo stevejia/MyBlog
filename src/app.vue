@@ -17,7 +17,7 @@
                                 <p>Steve Jia</p>
                             </Col>
                             <Col span="6" style="line-height: 48px;">
-                                <Button type="ghost">关注</Button>
+                                <Button type="ghost" v-on:click="testSaveData">关注</Button>
                             </Col>
                         </Row>
                     </p>
@@ -107,7 +107,9 @@
 </div>
     
 </template>
+
 <script>
+    import Util from './libs/util';
     const len = 5;
     export default {
         data() {
@@ -147,6 +149,11 @@
                     length = len;
                 }
                 this.getList(length);
+            },
+            testSaveData(){
+                Util.ajax.post('http://localhost:8088/api/login/createAccount').then(function(data){
+                    console.log(data)
+                })
             }
         }
     };
