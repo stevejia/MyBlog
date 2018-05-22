@@ -1,0 +1,14 @@
+body{
+    background: url(../images/bg1.jpg);
+}
+
+ul, li{
+    list-style: none;
+}
+
+@media screen and (max-width: 1201px){
+    .container{
+        min-width: 1201px;
+        margin: auto;
+    }
+}

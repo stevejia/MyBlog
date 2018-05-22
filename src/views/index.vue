@@ -30,53 +30,48 @@
     }
 </style>
 <template>
-<div class="layout">
-    <Layout>
-        <Header>
-            <Menu mode="horizontal" :theme="theme1" active-name="1">
-        <MenuItem name="1">
-            <Icon type="ios-paper"></Icon>
-            内容管理
-        </MenuItem>
-        <MenuItem name="2">
-            <Icon type="ios-people"></Icon>
-            用户管理
-        </MenuItem>
-        <Submenu name="3">
-            <template slot="title">
-                <Icon type="stats-bars"></Icon>
-                统计分析
-            </template>
-            <MenuGroup title="使用">
-                <MenuItem name="3-1">新增和启动</MenuItem>
-                <MenuItem name="3-2">活跃分析</MenuItem>
-                <MenuItem name="3-3">时段分析</MenuItem>
-            </MenuGroup>
-            <MenuGroup title="留存">
-                <MenuItem name="3-4">用户留存</MenuItem>
-                <MenuItem name="3-5">流失用户</MenuItem>
-            </MenuGroup>
-        </Submenu>
-        <MenuItem name="4">
-            <Icon type="settings"></Icon>
-            综合设置
-        </MenuItem>
-    </Menu>
-        </Header>
-        <Layout>
-            <Sider hide-trigger>Sider</Sider>
-            <Content>Content</Content>
-        </Layout>
-        <Footer>Footer</Footer>
-    </Layout>
-</div>
+    <div>
+        <Card :bordered="false"  v-for="item in articleList">
+            <h3 slot="title">
+                {{item.title}}
+            </h3>
+            <p style="color: #999999">
+                Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表...
+            </p>
+            <p style="margin-top: 10px;">
+                "2018-05-12 20:00:32"&nbsp;&nbsp;&nbsp;&nbsp; 阅读数：1917&nbsp;&nbsp;&nbsp;&nbsp;评论数：1
+            </p>
+        </Card>
+    </div>
+    
 </template>
 <script>
     export default {
         data () {
             return {
-                theme1: 'light'
+                theme1: 'light',
+                articleList: [],
             }
+        },
+        methods: {
+            listArticle(){
+                let array=[
+                    {title: "Android方法数methods超过1", content: "Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表", releaseDate: "2018-05-12 20:00:32", readingTimes: 1973, commentTimes: 3 },
+                    {title: "Android方法数methods超过2", content: "Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表", releaseDate: "2018-05-12 20:00:32", readingTimes: 1973, commentTimes: 3 },
+                    {title: "Android方法数methods超过3", content: "Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表", releaseDate: "2018-05-12 20:00:32", readingTimes: 1973, commentTimes: 3 },
+                    {title: "Android方法数methods超过4", content: "Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表", releaseDate: "2018-05-12 20:00:32", readingTimes: 1973, commentTimes: 3 },
+                    {title: "Android方法数methods超过5", content: "Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表", releaseDate: "2018-05-12 20:00:32", readingTimes: 1973, commentTimes: 3 },
+                    {title: "Android方法数methods超过6", content: "Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表", releaseDate: "2018-05-12 20:00:32", readingTimes: 1973, commentTimes: 3 },
+                    {title: "Android方法数methods超过7", content: "Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表", releaseDate: "2018-05-12 20:00:32", readingTimes: 1973, commentTimes: 3 },
+                    {title: "Android方法数methods超过8", content: "Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表", releaseDate: "2018-05-12 20:00:32", readingTimes: 1973, commentTimes: 3 },
+                    {title: "Android方法数methods超过9", content: "Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表", releaseDate: "2018-05-12 20:00:32", readingTimes: 1973, commentTimes: 3 },
+                    {title: "Android方法数methods超过10", content: "Android/iOS及设计中ARGB颜色值百分比透明度换算设计上经常要求对一个颜色值进行一定百分比的透明度，比如给定一个颜色0xFF0000FF（蓝色）要求80%透明，该如何处理呢？80%透明的蓝色值是多少呢？常见的颜色是RGB表示的，就比如上面的蓝色0xFF0000FF，这个颜色值是16进制表", releaseDate: "2018-05-12 20:00:32", readingTimes: 1973, commentTimes: 3 }];
+                this.articleList = array;
+            },
+
+        },
+        mounted() {
+            this.listArticle();
         }
     }
 </script>
