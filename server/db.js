@@ -4,7 +4,10 @@ console.log("DB connected.");
 var Schema = mongoose.Schema;
 var userInfoSechema = new Schema({
     name: String,
-    password: String
+    password: String,
+    userid: Number,
+},{
+    collection: "userinfo"
 });
 const models = {
     UserInfo: mongoose.model("userinfo", userInfoSechema)

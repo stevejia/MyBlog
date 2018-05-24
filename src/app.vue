@@ -127,7 +127,6 @@
         },
         methods: {
             getList(len){
-                console.log(len);
                 let array = [{title: "2018年5月", count: 15 },{title: "2018年4月", count: 13 },{title: "2018年3月", count: 12 },{title: "2018年2月", count: 15 },{title: "2018年1月", count: 13 },{title: "2017年12月", count: 12 },{title: "2017年11月", count: 12 }]
                 let filteredArr = [];
                 if(len){
@@ -154,8 +153,11 @@
                 Util.ajax.post("/api/login/createAccount",null)
                     .then(function(response){
                         console.log(response);
+                        Util.ajax.get("/api/login/getAccount",{id: 1})
+                    .then(function(response){
+                        console.log(response);
                     });
-                
+                    });
             }
         }
     };
