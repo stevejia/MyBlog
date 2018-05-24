@@ -43,7 +43,7 @@
                         </li>
                         <div class="text-center">
                             <a v-on:click="expandDoc" v-if="allList.length > 5 && !isExpanded ">展开<Icon type="chevron-down"></Icon></a>
-                            <a v-on:click="expandDoc" v-if="isExpanded ">收起<Icon type="chevron-down"></Icon></a>
+                            <a v-on:click="expandDoc" v-if="isExpanded ">收起<Icon type="chevron-up"></Icon></a>
                         </div>
                     </ul>
                 </Card>
@@ -60,7 +60,7 @@
                         </li>
                         <div class="text-center">
                             <a v-on:click="expandDoc" v-if="allList.length > 5 && !isExpanded ">展开<Icon type="chevron-down"></Icon></a>
-                            <a v-on:click="expandDoc" v-if="isExpanded ">收起<Icon type="chevron-down"></Icon></a>
+                            <a v-on:click="expandDoc" v-if="isExpanded ">收起<Icon type="chevron-up"></Icon></a>
                         </div>
                     </ul>
                 </Card>
@@ -77,7 +77,7 @@
                         </li>
                         <div class="text-center">
                             <a v-on:click="expandDoc" v-if="allList.length > 5 && !isExpanded ">展开<Icon type="chevron-down"></Icon></a>
-                            <a v-on:click="expandDoc" v-if="isExpanded ">收起<Icon type="chevron-down"></Icon></a>
+                            <a v-on:click="expandDoc" v-if="isExpanded ">收起<Icon type="chevron-up"></Icon></a>
                         </div>
                     </ul>
                 </Card>
@@ -94,7 +94,7 @@
                         </li>
                         <div class="text-center">
                             <a v-on:click="expandDoc" v-if="allList.length > 5 && !isExpanded ">展开<Icon type="chevron-down"></Icon></a>
-                            <a v-on:click="expandDoc" v-if="isExpanded ">收起<Icon type="chevron-down"></Icon></a>
+                            <a v-on:click="expandDoc" v-if="isExpanded ">收起<Icon type="chevron-up"></Icon></a>
                         </div>
                     </ul>
                 </Card>
@@ -103,7 +103,7 @@
                 <router-view style="background: #fff; margin: 0 15px;"></router-view>
             </Col>
         </Row>
-    </div>
+    </div> 
 </div>
     
 </template>
@@ -151,9 +151,11 @@
                 this.getList(length);
             },
             testSaveData(){
-                Util.ajax.post('http://localhost:8088/api/login/createAccount').then(function(data){
-                    console.log(data)
-                })
+                Util.ajax.post("/api/login/createAccount",null)
+                    .then(function(response){
+                        console.log(response);
+                    });
+                
             }
         }
     };
