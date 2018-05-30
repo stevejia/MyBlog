@@ -150,14 +150,11 @@
                 this.getList(length);
             },
             testSaveData(){
-                Util.ajax.post("/api/login/createAccount",null)
-                    .then(function(response){
-                        console.log(response);
-                        Util.ajax.get("/api/login/getAccount",{id: 1})
-                    .then(function(response){
-                        console.log(response);
-                    });
-                    });
+                var token = sessionStorage.getItem("token");
+                Util.post("/api/login/createAccount",{token: token }, function(result){
+                    console.log(result);
+                });
+                    
             }
         }
     };
