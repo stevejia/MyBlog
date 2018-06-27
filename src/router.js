@@ -1,25 +1,33 @@
-const routers = [{
+import App from '@/app';
+import index from '@/views/home/index';
+import main from '@/views/main'
+import login from '@/views/account/login'
+const routers = [
+  {
     path: '/',
-    meta: {
-        title: 'SteveJia',
-        requiresAuth: true
-    },
-    component: (resolve) => require(['./views/index.vue'], resolve),
+    component: App,
     children: [
-        {
-          path: 'login',
-          component: (resolve) => require(['./views/account/login.vue', resolve]),
-          // a meta field
-          meta: { requiresAuth: true }
+      {
+        path: '',
+        redirect: 'sjblog'
+      },
+      {
+        path: 'sjblog',
+        name: 'sjblog',
+        component: main,
+        meta: {
+            requireAuth: true,
         }
-      ]
-},
-{
-    path: '/login',
-    meta: {
-        title: '登陆'
-    },
-    
-}
+      },
+      {
+        path: 'login',
+        name: 'login',
+        meta: {
+          title: '登陆'
+        },
+        component: login
+      }
+    ]
+  }
 ];
 export default routers;

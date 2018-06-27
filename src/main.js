@@ -1,11 +1,11 @@
-import Vue from 'vue';
-import iView from 'iview';
-import VueRouter from 'vue-router';
-import Routers from './router';
-import Vuex from 'vuex';
-import Util from './libs/util';
-import App from './app.vue';
-import 'iview/dist/styles/iview.css';
+import Vue from "vue";
+import iView from "iview";
+import VueRouter from "vue-router";
+import Routers from "./router";
+import Vuex from "vuex";
+import Util from "./libs/util";
+import App from "./app.vue";
+import "iview/dist/styles/iview.css";
 import vuewResource from "vue-resource";
 // import Axios from 'Axios';
 
@@ -16,49 +16,51 @@ Vue.use(iView);
 Vue.use(vuewResource);
 // Vue.use(Axios);
 
-
-
-
 // 路由配置
 const RouterConfig = {
-    mode: 'history',
-    routes: Routers
+  mode: "history",
+  routes: Routers
 };
 const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
-    var tokenstatus = sessionStorage.getItem("tokenstatus");
-    
-    iView.LoadingBar.start();
-    Util.title(to.meta.title);
+//   if (to.name === "login" && from.name !== "login") {
+//     return;
+//   }
+  if (to.matched.some(d => d.meta.requireAuth)) {
+    var token = localStorage.getItem("token");
+    if (token) {
+      next();
+    } else {
+      next({
+        path: "/login",
+        query: { redirect: to.fullPath }
+      });
+    }
+  } else {
     next();
+  }
+
+  iView.LoadingBar.start();
+  Util.title(to.meta.title);
+  next();
 });
 
 router.afterEach(() => {
-    iView.LoadingBar.finish();
-    window.scrollTo(0, 0);
+  iView.LoadingBar.finish();
+  window.scrollTo(0, 0);
 });
-
 
 const store = new Vuex.Store({
-    state: {
-
-    },
-    getters: {
-
-    },
-    mutations: {
-
-    },
-    actions: {
-
-    }
+  state: {},
+  getters: {},
+  mutations: {},
+  actions: {}
 });
 
-
 new Vue({
-    el: '#app',
-    router: router,
-    store: store,
-    render: h => h(App)
+  el: "#app",
+  router: router,
+  store: store
+  // render: h => h(App)
 });
