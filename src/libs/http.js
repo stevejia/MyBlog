@@ -1,61 +1,108 @@
-// import env from '../config/env';
-// const ajaxUrl = env === 'development' ?
-//     'http://localhost:8088' :
-//     env === 'production' ?
-//     'https://www.url.com' :
-//     'https://debug.url.com';
-// const Axios = axios.create({
-//     baseURL: ajaxUrl,
-//     timeout: 10000,
-//     responseType: "json",
-//     withCredentials: true, // 是否允许带cookie这些
-//     // transformResponse:[function (data) {  
-//     //     return querystring.stringify(data)//转换data 不用每个请求都用 querystring.stringify;
-//     // }],
-//     headers: {
-//         "Content-Type": "application/x-www-form-urlencoded;charset=utf-8"
-//     }
-// });
-// Axios.interceptors.request.use(
-//     config => {
-//         debugger;
-//         // 在发送请求之前做某件事
-//         if (
-//             config.method === "post" ||
-//             config.method === "put" ||
-//             config.method === "delete"
-//         ) {
-//             // 添加token
-//             if (localStorage.getItem("joywareUser")) {
-//                 config.data.accessToken = JSON.parse(localStorage.getItem("joywareUser")).accessToken;
-//                 console.log(config.data.accessToken)
-//             };
-//             config.data = querystring.stringify(config.data);//将请求的参数转化
-//         }
-//         return config;
-//     },
-//     error => {
-//         console.log(error);
-//         return Promise.reject("请求拦截报错信息"+error);
-//     }
-// );
+import axios from 'axios'
+import Vue from 'vue'
+import { router } from '@/router/router.js'
+export let eventHub = new Vue()
+let baseURL = Window.apiUrl
 
-// //返回状态判断(添加响应拦截器)
-// Axios.interceptors.response.use(
-//     res => {
-//         //对响应数据做些事
-//         if (res.data.errcode != 0) {
-//             return Promise.reject(res.data.errdesc);
-//         };
-//     },
-//     error => {
-//         return Promise.reject("返回拦截报错信息"+error);
-//     }
-// );
+axios.defaults.timeout = 120000 //  响应时间
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded' // 配置请求头 responseType:
+axios.defaults.baseURL = baseURL
 
-// // 对axios的实例重新封装成一个plugin ,方便 Vue.use(xxxx)
-// export default {
-//     install: function (Vue, Option) {
-//         Object.defineProperty(Vue.prototype, "$http", { value: Axios });
-//     }
-// };
+function get(path, params, needLoading = false) {
+    axios.defaults.headers.common['token'] = window.localStorage.getItem('token')
+    return new Promise((resolve, reject) => {
+        if (needLoading) {
+            Indicator.open();
+        }
+        axios({
+            method: 'get',
+            url: path,
+            params: params
+        }).then(response => {
+            if (needLoading) {
+                Indicator.close();
+            }
+            if (!response.status) {
+                MessageBox.alert(response.message, '提示');
+                reject(response.data);
+            }
+            resolve(response.data)
+        }).catch(error => {
+            if (needLoading) {
+                Indicator.close();
+            }
+            if (error.response) {
+                showStateError(error.response)
+            } else if (error.status) {
+                showStateError(error)
+            } else {
+                MessageBox.alert(`服务器故障，请【稍后再试】或【联系管理员】`)
+            }
+            reject(error)
+        })
+    })
+}
+
+function post(path, params, needLoading = false) {
+    axios.defaults.headers.common['token'] = window.localStorage.getItem('token')
+    return new Promise((resolve, reject) => {
+        if (needLoading) {
+            Indicator.open();
+        }
+        axios({
+            method: 'post',
+            url: path,
+            data: params
+        }).then(response => {
+            if (needLoading) {
+                Indicator.close();
+            }
+
+            if (!response.data.status) {
+                MessageBox.alert(response.data.message);
+                reject(response.data);
+            } else {
+                resolve(response.data)
+            }
+        }).catch(error => {
+            if (needLoading) {
+                Indicator.close();
+            }
+            if (error.response) {
+                showStateError(error.response)
+            } else if (error.status) {
+                showStateError(error)
+            } else {
+                MessageBox.alert(`服务器故障，请【稍后再试】或【联系管理员】`);
+            }
+            reject(error)
+        })
+    })
+}
+
+function showStateError(response) {
+    switch (response.status) {
+        case 400:
+            MessageBox.alert(response.data.message)
+            break
+        case 401:
+            MessageBox.alert('token过期，请重新登录')
+            if (location.pathname !== '/login') {
+                router.push({
+                    path: '/login',
+                    query: { redirect: location.pathname + location.search }
+                })
+            }
+            break
+        case 404:
+            MessageBox.alert('访问的后台接口不存在')
+            break
+        case 500:
+            MessageBox.alert('系统错误，请【联系管理员】')
+            break
+        default:
+            MessageBox.alert('系统异常')
+    }
+}
+
+export let http = { post, get }
