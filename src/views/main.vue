@@ -1,8 +1,10 @@
 <template>
 <div>
     <Layout>
+        <Affix :offset-top="0">
         <Header class="header-wrapper">
-            <router-link class="logo inline" to="sjblog">
+            
+                <router-link class="logo inline" to="sjblog">
                 <img class="logo-img" src="../content/images/logo1.png" />      
             </router-link>
             <Menu class="inline pull-right" mode="horizontal" active-name="1">
@@ -34,13 +36,16 @@
                     注册
                 </MenuItem>
             </Menu>
+            
+            
         </Header>
+        </Affix>
         <Content class="content-wrapper">
             <div class="content">
                 <router-view></router-view>
             </div>
         </Content>
-        <Footer class="footer-wrapper">Footer</Footer>
+        <!-- <Footer class="footer-wrapper">Footer</Footer> -->
     </Layout>
 </div>
     
@@ -56,7 +61,7 @@
 .ivu-layout-content {
   height: 100vh;
   padding-top: 64px;
-  padding-bottom: 69px;
+//   padding-bottom: 69px;
   background-color: #f5f6f7;
   box-shadow: 0 1px 1px 0 rgba(0,0,0,.1);
   width: 80vw;

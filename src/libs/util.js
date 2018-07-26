@@ -4,7 +4,7 @@ import router from "../router";
 import VueRouter from "vue-router";
 
 const setTitle = function(title) {
-  title = title ? title + " - Home" : "iView project";
+  title = title ? title : "世秋的博客-Facynato";
   window.document.title = title;
 };
 

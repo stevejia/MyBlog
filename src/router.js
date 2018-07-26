@@ -1,46 +1,56 @@
 import VueRouter from "vue-router";
-import App from '@/app';
-import index from '@/views/home/index';
-import main from '@/views/main'
-import login from '@/views/account/login'
+import App from "@/app";
+import index from "@/views/home/index";
+import main from "@/views/main";
+import login from "@/views/account/login";
+import article from '@/views/home/article'
 const routers = [
   {
-    path: '/',
+    path: "/",
     component: App,
     children: [
       {
-        path: '',
-        redirect: 'sjblog'
+        path: "",
+        redirect: "sjblog"
       },
       {
-        path: 'sjblog',
-        name: 'sjblog',
+        path: "sjblog",
+        name: "sjblog",
         component: main,
-        meta: {
-            requireAuth: true,
-            title: '首页'
-        },
+        
         children: [
           {
-            path: '',
-            redirect: 'index',
-          },
-          {
-            path: 'index',
-            name: 'index',
+            path: "",
             component: index,
-            meta: {
-              requireAuth: true,
-              title: '首页'
+            
+            children: [
+              {
+                path: '',
+                redirect: 'recommend'
+              },
+              {
+                path: 'recommend/:type',
+                name: 'recommend',
+                component: article,
+                meta: {
+                  requireAuth: true,
+                  title: "世秋的博客"
+                },
+                props: (route)=>{
+                  return {
+                    type: route.params.type,
+                  }
+                },
+              }
+            ]
           },
-          }
         ]
       },
       {
-        path: 'login',
-        name: 'login',
+        path: "login",
+        name: "login",
         meta: {
-          title: '登陆'
+          title: "登陆"
         },
         component: login
       }
