@@ -8,8 +8,10 @@ axios.defaults.timeout = 120000 //  响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded' // 配置请求头 responseType:
 axios.defaults.baseURL = baseURL
 
-function get(path, params, needLoading = false) {
-    axios.defaults.headers.common['token'] = window.localStorage.getItem('token')
+function get(path, params, needAuten = true, needLoading = false) {
+    debugger;
+    axios.defaults.headers.common['token'] = window.localStorage.getItem('token');
+    axios.defaults.headers.common['needAuten'] = needAuten;
     return new Promise((resolve, reject) => {
         if (needLoading) {
             Indicator.open();
@@ -40,8 +42,9 @@ function get(path, params, needLoading = false) {
     })
 }
 
-function post(path, params, needLoading = false) {
-    axios.defaults.headers.common['token'] = window.localStorage.getItem('token')
+function post(path, params, needAuten = true, needLoading = false) {
+    axios.defaults.headers.common['token'] = window.localStorage.getItem('token');
+    axios.defaults.headers.common['needAuten'] = needAuten;
     return new Promise((resolve, reject) => {
         if (needLoading) {
             Indicator.open();

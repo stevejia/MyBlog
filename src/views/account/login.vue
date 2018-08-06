@@ -16,6 +16,7 @@
     </Card>
 </template>
 <script>
+import {http} from '@/libs/http'
 export default {
   data() {
     const validateUserName = (rule, value, callback) => {
@@ -44,10 +45,19 @@ export default {
   methods: {
     login(name) {
       var currentRouter = this.$router.currentRoute;
-      var redirect = currentRouter.query.redirect;
-      this.$router.push({
-        path: redirect
+      debugger;
+      var redirect = currentRouter.query.redirect || '/sjblog/article/recommend';
+      http.post('/api/account/login', {loginInfo: this.loginModel}).then(res=>{
+        let token = res.token;
+        localStorage.setItem('token', token);
+        this.$router.push({
+          path: redirect
+        });
       });
+
+
+      
+      
       //   this.$refs[name].validate(valid => {
       //     if(!valid){
       //         return ;

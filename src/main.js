@@ -20,15 +20,23 @@ router.beforeEach((to, from, next) => {
   debugger;
   var token = localStorage.getItem("token");
   var title = '';
+  if(!to.name && to.path=== '/'){
+    router.replace({
+      path: "/sjblog/article/recommend",
+    });
+    next();
+  }
   if (to.name === "login" && token) {
     // next({
     //   path: from.fullPath,
     //   replace: true,
     // });
     // title = from.meta.title;
+    next();
   } else {
     if (to.matched.some(d => d.meta.requireAuth)) {
       if (token) {
+        
         next();
       } else {
         router.replace({
