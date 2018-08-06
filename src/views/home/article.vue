@@ -2,6 +2,7 @@
     <div>Articles</div>
 </template>
 <script>
+import {http} from '@/libs/http';
 export default {
     name: 'Article',
     props: {
@@ -13,10 +14,13 @@ export default {
         };
     },
     mounted(){
+        http.get('/api/article/getCommends',{}).then((res)=>{
 
+            console.log("ddd");
+        });
     },
     methods: {
-
+        
     },
 }
 </script>

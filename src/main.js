@@ -17,14 +17,15 @@ Vue.use(vuewResource);
 // Vue.use(Axios);
 
 router.beforeEach((to, from, next) => {
+  debugger;
   var token = localStorage.getItem("token");
   var title = '';
   if (to.name === "login" && token) {
-    next({
-      path: from.fullPath,
-      replace: true,
-    });
-    title = from.meta.title;
+    // next({
+    //   path: from.fullPath,
+    //   replace: true,
+    // });
+    // title = from.meta.title;
   } else {
     if (to.matched.some(d => d.meta.requireAuth)) {
       if (token) {

@@ -1,8 +1,8 @@
 import axios from 'axios'
 import Vue from 'vue'
-import { router } from '@/router/router.js'
+import { router } from '@/router.js'
 export let eventHub = new Vue()
-let baseURL = Window.apiUrl
+let baseURL = Window.apiUrl || 'http://localhost:8088';
 
 axios.defaults.timeout = 120000 //  响应时间
 axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded' // 配置请求头 responseType:
@@ -22,10 +22,6 @@ function get(path, params, needLoading = false) {
             if (needLoading) {
                 Indicator.close();
             }
-            if (!response.status) {
-                MessageBox.alert(response.message, '提示');
-                reject(response.data);
-            }
             resolve(response.data)
         }).catch(error => {
             if (needLoading) {
@@ -36,9 +32,10 @@ function get(path, params, needLoading = false) {
             } else if (error.status) {
                 showStateError(error)
             } else {
-                MessageBox.alert(`服务器故障，请【稍后再试】或【联系管理员】`)
+                alert(`服务器故障，请【稍后再试】或【联系管理员】`);
+                // MessageBox.alert()
             }
-            reject(error)
+            // reject(error)
         })
     })
 }
@@ -57,13 +54,7 @@ function post(path, params, needLoading = false) {
             if (needLoading) {
                 Indicator.close();
             }
-
-            if (!response.data.status) {
-                MessageBox.alert(response.data.message);
-                reject(response.data);
-            } else {
-                resolve(response.data)
-            }
+            resolve(response.data)
         }).catch(error => {
             if (needLoading) {
                 Indicator.close();
@@ -73,7 +64,8 @@ function post(path, params, needLoading = false) {
             } else if (error.status) {
                 showStateError(error)
             } else {
-                MessageBox.alert(`服务器故障，请【稍后再试】或【联系管理员】`);
+                alert(`服务器故障，请【稍后再试】或【联系管理员】`);
+                
             }
             reject(error)
         })
@@ -83,25 +75,25 @@ function post(path, params, needLoading = false) {
 function showStateError(response) {
     switch (response.status) {
         case 400:
-            MessageBox.alert(response.data.message)
+            alert(response.data.message);
             break
         case 401:
-            MessageBox.alert('token过期，请重新登录')
+            debugger;
             if (location.pathname !== '/login') {
-                router.push({
-                    path: '/login',
+                router.replace({
+                    path: 'login',
                     query: { redirect: location.pathname + location.search }
                 })
             }
             break
         case 404:
-            MessageBox.alert('访问的后台接口不存在')
+            alert('访问的后台接口不存在');
             break
         case 500:
-            MessageBox.alert('系统错误，请【联系管理员】')
+            alert('系统错误，请【联系管理员】');
             break
         default:
-            MessageBox.alert('系统异常')
+            alert('系统异常');
     }
 }
 

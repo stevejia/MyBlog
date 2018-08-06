@@ -45,7 +45,6 @@ export default {
     login(name) {
       var currentRouter = this.$router.currentRoute;
       var redirect = currentRouter.query.redirect;
-      localStorage.setItem("token", 'token');
       this.$router.push({
         path: redirect
       });

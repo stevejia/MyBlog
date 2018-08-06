@@ -3,7 +3,6 @@
     <Layout>
         <Affix :offset-top="0">
         <Header class="header-wrapper">
-            
                 <router-link class="logo inline" to="sjblog">
                 <img class="logo-img" src="../content/images/logo1.png" />      
             </router-link>

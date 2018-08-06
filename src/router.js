@@ -8,44 +8,7 @@ const routers = [
   {
     path: "/",
     component: App,
-    children: [
-      {
-        path: "",
-        redirect: "sjblog"
-      },
-      {
-        path: "sjblog",
-        name: "sjblog",
-        component: main,
-        
-        children: [
-          {
-            path: "",
-            component: index,
-            
-            children: [
-              {
-                path: '',
-                redirect: 'recommend'
-              },
-              {
-                path: 'recommend/:type',
-                name: 'recommend',
-                component: article,
-                meta: {
-                  requireAuth: true,
-                  title: "世秋的博客"
-                },
-                props: (route)=>{
-                  return {
-                    type: route.params.type,
-                  }
-                },
-              }
-            ]
-          },
-        ]
-      },
+    children: [ 
       {
         path: "login",
         name: "login",
@@ -53,6 +16,23 @@ const routers = [
           title: "登陆"
         },
         component: login
+      },
+      {
+        path: 'sjblog',
+        component: main,
+        children: [{
+          path: 'article',
+          component: index,
+          children: [{
+              path: 'recommend',
+              name: 'recommend',
+              component: article,
+              meta: {
+                requireAuth: true,
+                title: '推荐',
+              }
+          }]
+        }]
       }
     ]
   }
