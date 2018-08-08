@@ -31,8 +31,10 @@
                     </MenuGroup>
                 </Submenu> -->
                 <MenuItem name="4">
-                    <Icon type="person-add"></Icon>
-                    注册
+                    <router-link :to="{name: 'signup'}">
+                        <Icon type="person-add"></Icon>
+                        注册
+                    </router-link>
                 </MenuItem>
             </Menu>
             

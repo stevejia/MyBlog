@@ -9,7 +9,6 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
 axios.defaults.baseURL = baseURL
 
 function get(path, params, needAuten = true, needLoading = false) {
-    debugger;
     axios.defaults.headers.common['token'] = window.localStorage.getItem('token');
     axios.defaults.headers.common['needAuten'] = needAuten;
     return new Promise((resolve, reject) => {
@@ -81,10 +80,9 @@ function showStateError(response) {
             alert(response.data.message);
             break
         case 401:
-            debugger;
             if (location.pathname !== '/login') {
                 router.replace({
-                    path: 'login',
+                    path: '/login',
                     query: { redirect: location.pathname + location.search }
                 })
             }

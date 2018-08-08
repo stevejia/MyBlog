@@ -3,7 +3,8 @@ import App from "@/app";
 import index from "@/views/home/index";
 import main from "@/views/main";
 import login from "@/views/account/login";
-import article from '@/views/home/article'
+import article from '@/views/home/article';
+import signup from '@/views/account/signup';
 const routers = [
   {
     path: "/",
@@ -32,6 +33,14 @@ const routers = [
                 title: '推荐',
               }
           }]
+        },
+        {
+          path: "signup",
+          name: "signup",
+          meta: {
+            title: "注册"
+          },
+          component: signup
         }]
       }
     ]
