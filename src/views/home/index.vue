@@ -6,7 +6,7 @@
      -->
             <Sider hide-trigger>
                 <Affix :offset-top="64">
-                <Menu theme="light" active-name="1">
+                <Menu theme="dark" active-name="1">
                     <MenuItem name="1">
                         推荐
                     </MenuItem>

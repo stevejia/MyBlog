@@ -47,7 +47,11 @@ export default {
       var currentRouter = this.$router.currentRoute;
       debugger;
       var redirect = currentRouter.query.redirect || '/sjblog/article/recommend';
-      http.post('/api/account/login', {loginInfo: this.loginModel}, false).then(res=>{
+      let loginInfo = {
+        name: this.loginModel.userName,
+        password: this.loginModel.password
+      };
+      http.post('/api/account/login', loginInfo, false).then(res=>{
         let token = res.token;
         localStorage.setItem('token', token);
         this.$router.push({

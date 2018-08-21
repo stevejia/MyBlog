@@ -16,6 +16,7 @@
     </Form>
 </template>
 <script>
+    import {http} from '@/libs/http';
     export default {
         data () {
             const validatePassCheck = (rule, value, callback) => {
@@ -51,9 +52,14 @@
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        this.$Message.success('Success!');
-                    } else {
-                        this.$Message.error('Fail!');
+                        debugger;
+                        let userInfo = {
+                            name: this.formCustom.userName,
+                            password: this.formCustom.password,
+                        };
+                        http.post('/api/account/register',userInfo ).then(res=>{
+                            this.$router.push("/login");
+                        });
                     }
                 })
             },

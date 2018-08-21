@@ -3,17 +3,19 @@
     <Layout>
         <Affix :offset-top="0">
         <Header class="header-wrapper">
-                <router-link class="logo inline" to="sjblog">
+                <router-link class="logo inline" to="/">
                 <img class="logo-img" src="../content/images/logo1.png" />      
             </router-link>
-            <Menu class="inline pull-right" mode="horizontal" active-name="1">
-                <MenuItem name="1">
+            <Menu theme="primary" class="inline pull-right custom-menu" mode="horizontal" active-name="1">
+                <MenuItem class="custom-menu-item" name="1">
                     <Icon type="paintbrush"></Icon>
                     写博客
                 </MenuItem>
-                <MenuItem name="2">
-                    <Icon type="person"></Icon>
-                    登录
+                <MenuItem class="custom-menu-item" name="2">
+                    <router-link :to="{name: 'login'}">
+                        <Icon type="person"></Icon>
+                        登录
+                    </router-link>
                 </MenuItem>
                 <!-- <Submenu name="3">
                     <template slot="title">
@@ -30,7 +32,7 @@
                         <MenuItem name="3-5">流失用户</MenuItem>
                     </MenuGroup>
                 </Submenu> -->
-                <MenuItem name="4">
+                <MenuItem v-if="isLogin" class="custom-menu-item" name="4">
                     <router-link :to="{name: 'signup'}">
                         <Icon type="person-add"></Icon>
                         注册
@@ -51,6 +53,24 @@
 </div>
     
 </template>
+
+
+<script>
+export default {
+    data(){
+        return{ 
+            isLogin: false
+        }
+        
+    },
+    mounted(){
+        let token = localStorage.getItem("token");
+        this.isLogin = !!token;
+    },
+}
+</script>
+
+
 <style lang="less" scoped>
 .ivu-layout-header {
   position: absolute;
@@ -87,5 +107,15 @@
 }
 .inline{
     display: inline!important;
+}
+
+.custom-menu{
+    background: #ffffff;
+}
+.custom-menu-item.ivu-menu-item-active{
+    background: #ffffff!important;
+}
+.custom-menu-item, .custom-menu-item a{
+    color: #666666!important;
 }
 </style>
