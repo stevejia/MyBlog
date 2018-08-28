@@ -5,6 +5,8 @@ import main from "@/views/main";
 import login from "@/views/account/login";
 import article from '@/views/home/article';
 import signup from '@/views/account/signup';
+import writeBlog from '@/views/user/writeblog';
+import manageBackend from '@/views/backend/managebackend';
 const routers = [
   {
     path: "/",
@@ -41,6 +43,24 @@ const routers = [
             title: "注册"
           },
           component: signup
+        },
+        {
+          path: 'writeblog',
+          name: 'writeblog',
+          component: writeBlog,
+          meta: {
+            requireAuth: true,
+            title: '写博客',
+          }
+        },
+        {
+          path: 'managebackend',
+          name: 'managebackend',
+          component: manageBackend,
+          meta: {
+            requireAuth: true,
+            title: '写博客',
+          }
         }]
       }
     ]

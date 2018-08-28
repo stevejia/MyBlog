@@ -16,29 +16,10 @@
                     <MenuItem name="3">
                         关注
                     </MenuItem>
-                    <MenuItem name="4">
-                        资讯
-                    </MenuItem>
-                    <MenuItem name="5">
-                        人工智能
-                    </MenuItem>
-                    <MenuItem name="6">
-                        云计算/大数据
-                    </MenuItem>
-                    <MenuItem name="7">
-                        计算机基础
-                    </MenuItem>
-                    <MenuItem name="8">
-                        编程语言
-                    </MenuItem>
-                    <MenuItem name="9">
-                        架构
-                    </MenuItem>
-                    <MenuItem name="10">
-                        安全
-                    </MenuItem>
-                    <MenuItem name="11">
-                        其他
+                    <MenuItem v-for="(item, index) in commonData.blogTypes" 
+                        :name="index + 4" 
+                        @click.native="routeTo(item.router)">
+                        {{item.text}}
                     </MenuItem>
                 </Menu>
                 </Affix>
@@ -51,26 +32,44 @@
         </Layout>
     </Layout>
 </template>
+<script>
+export default {
+  data() {
+    return {
+      commonData: this.$store.getters.getCommonData
+    };
+  },
+  methods: {
+    routeTo(router) {
+        debugger;
+        this.$router.push({
+          path: router,
+        });
+    }
+  }
+};
+</script>
+
 <style lang="less" scoped>
 .ivu-layout-sider {
-  width: auto!important;
-  min-width: unset!important;
-  max-width: unset!important;
-  flex: unset!important;
-  background-color: #f5f7f9!important;
+  width: auto !important;
+  min-width: unset !important;
+  max-width: unset !important;
+  flex: unset !important;
+  background-color: #f5f7f9 !important;
 }
-.ivu-menu{
-    width: auto!important;
+.ivu-menu {
+  width: auto !important;
 }
-.ivu-layout{
-    height: 100%;
+.ivu-layout {
+  height: 100%;
 }
-.ivu-layout-content{
-    padding: 0 10px!important;
+.ivu-layout-content {
+  padding: 0 10px !important;
 }
-.content-wrapper{
-    width: 100%;
-    height: 100%;
-    background-color: #ffffff;
+.content-wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: #ffffff;
 }
 </style>

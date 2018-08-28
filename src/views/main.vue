@@ -8,8 +8,10 @@
             </router-link>
             <Menu theme="primary" class="inline pull-right custom-menu" mode="horizontal" active-name="1">
                 <MenuItem class="custom-menu-item" name="1">
-                    <Icon type="paintbrush"></Icon>
-                    写博客
+                    <router-link :to="{name: 'writeblog'}">
+                        <Icon type="paintbrush"></Icon>
+                        写博客
+                    </router-link>
                 </MenuItem>
                 <MenuItem class="custom-menu-item" name="2">
                     <router-link :to="{name: 'login'}">
@@ -38,9 +40,14 @@
                         注册
                     </router-link>
                 </MenuItem>
+                <MenuItem v-if="isLogin" class="custom-menu-item" name="4">
+                    <router-link :to="{name: 'managebackend'}">
+                        <Icon type="plus"></Icon>
+                        基础数据
+                    </router-link>
+                </MenuItem>
+                
             </Menu>
-            
-            
         </Header>
         </Affix>
         <Content class="content-wrapper">
@@ -59,11 +66,12 @@
 export default {
     data(){
         return{ 
-            isLogin: false
+            isLogin: false,
         }
         
     },
     mounted(){
+        debugger;
         let token = localStorage.getItem("token");
         this.isLogin = !!token;
     },

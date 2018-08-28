@@ -7,8 +7,20 @@ import {util} from "./libs/util";
 import App from "./app.vue";
 import "iview/dist/styles/iview.css";
 import vuewResource from "vue-resource";
+import {http} from '@/libs/http';
 // import Axios from 'Axios';
+import mavonEditor from 'mavon-editor'
+    // markdown-it对象：md.s_markdown, md => mavonEditor实例
+    //                 or
+    //                 mavonEditor.markdownIt 
+    import 'mavon-editor/dist/css/index.css'
+    // use
+    Vue.use(mavonEditor)
 
+// 作者：hinesboy
+// 链接：https://www.jianshu.com/p/04376d0c9ff1
+// 來源：简书
+// 简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
@@ -59,16 +71,28 @@ router.afterEach(() => {
   window.scrollTo(0, 0);
 });
 
-const store = new Vuex.Store({
-  state: {},
-  getters: {},
-  mutations: {},
-  actions: {}
+http.get('/api/commondata/get',null).then((res)=>{
+  debugger;
+  const commonData = res.commonData;
+  const store = new Vuex.Store({
+    state: {
+      commonData: commonData
+    },
+    getters: {
+      getCommonData: state=>{
+        return state.commonData;
+      }
+    },
+    mutations: {},
+    actions: {}
+  });
+  new Vue({
+    el: "#app",
+    router: router,
+    store: store
+    // render: h => h(App)
+  });
 });
 
-new Vue({
-  el: "#app",
-  router: router,
-  store: store
-  // render: h => h(App)
-});
+
+
