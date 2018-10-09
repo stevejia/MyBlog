@@ -13,7 +13,7 @@
                         写博客
                     </router-link>
                 </MenuItem>
-                <MenuItem class="custom-menu-item" name="2">
+                <MenuItem class="custom-menu-item"  v-if="!isLogin" name="2">
                     <router-link :to="{name: 'login'}">
                         <Icon type="person"></Icon>
                         登录
@@ -34,13 +34,19 @@
                         <MenuItem name="3-5">流失用户</MenuItem>
                     </MenuGroup>
                 </Submenu> -->
-                <MenuItem v-if="isLogin" class="custom-menu-item" name="4">
+                <MenuItem v-if="!isLogin" class="custom-menu-item" name="4">
                     <router-link :to="{name: 'signup'}">
                         <Icon type="person-add"></Icon>
                         注册
                     </router-link>
                 </MenuItem>
                 <MenuItem v-if="isLogin" class="custom-menu-item" name="4">
+                    <router-link :to="{name: 'login'}">
+                        <Icon type="log-out" />
+                        退出
+                    </router-link>
+                </MenuItem>
+                <MenuItem class="custom-menu-item" name="4">
                     <router-link :to="{name: 'managebackend'}">
                         <Icon type="plus"></Icon>
                         基础数据
@@ -71,7 +77,6 @@ export default {
         
     },
     mounted(){
-        debugger;
         let token = localStorage.getItem("token");
         this.isLogin = !!token;
     },

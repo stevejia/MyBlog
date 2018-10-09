@@ -26,14 +26,27 @@ const routers = [
         children: [{
           path: 'article',
           component: index,
-          children: [{
+          children: [
+            {
               path: 'recommend',
               name: 'recommend',
               component: article,
               meta: {
-                requireAuth: true,
                 title: '推荐',
               }
+          },{
+              path: 'career',
+              name: 'career',
+              component: article,
+              meta: {
+                title: '程序人生',
+              },
+              props: route => {
+                return {
+                  type: route.query.type,
+                }
+              }
+
           }]
         },
         {

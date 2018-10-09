@@ -18,7 +18,7 @@
                     </MenuItem>
                     <MenuItem v-for="(item, index) in commonData.blogTypes" 
                         :name="index + 4" 
-                        @click.native="routeTo(item.router)">
+                        @click.native="routeTo(item.router, item.value)">
                         {{item.text}}
                     </MenuItem>
                 </Menu>
@@ -40,10 +40,10 @@ export default {
     };
   },
   methods: {
-    routeTo(router) {
-        debugger;
+    routeTo(router, type) {
         this.$router.push({
           path: router,
+          query: {type: type}
         });
     }
   }

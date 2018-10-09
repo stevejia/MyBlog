@@ -9,7 +9,7 @@
                     <Input type="password" v-model="loginModel.password"></Input>
                 </FormItem>
                 <FormItem>
-                    <Button type="primary" class="button" @click="login('loginModel')">登录</Button>
+                    <Button type="primary" class="button" @click="login()">登录</Button>
                 </FormItem>
             </Form>
         </div>
@@ -42,10 +42,12 @@ export default {
     //   }
     };
   },
+  mounted(){
+    localStorage.removeItem("token");
+  },
   methods: {
-    login(name) {
+    login() {
       var currentRouter = this.$router.currentRoute;
-      debugger;
       var redirect = currentRouter.query.redirect || '/sjblog/article/recommend';
       let loginInfo = {
         name: this.loginModel.userName,

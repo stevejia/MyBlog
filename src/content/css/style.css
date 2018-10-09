@@ -12,3 +12,14 @@ ul, li{
         margin: auto;
     }
 }
+.v-select .dropdown-toggle{
+    padding: 4px 0!important;
+}
+
+.v-select .dropdown-toggle::after{
+    display: none;
+}
+
+.form-control{
+    height: auto!important;
+}

@@ -52,7 +52,6 @@
             handleSubmit (name) {
                 this.$refs[name].validate((valid) => {
                     if (valid) {
-                        debugger;
                         let userInfo = {
                             name: this.formCustom.userName,
                             password: this.formCustom.password,

@@ -5,11 +5,16 @@ import { router } from "./router";
 import Vuex from "vuex";
 import {util} from "./libs/util";
 import App from "./app.vue";
-import "iview/dist/styles/iview.css";
+
 import vuewResource from "vue-resource";
 import {http} from '@/libs/http';
+// import $ from "jquery";
+import 'bootstrap/dist/css/bootstrap.min.css' 
+// import 'bootstrap/dist/js/bootstrap.min'
+// import 'font-awesome/css/font-awesome.min.css'
+import "iview/dist/styles/iview.css";
 // import Axios from 'Axios';
-import mavonEditor from 'mavon-editor'
+import mavonEditor from 'mavon-editor';
     // markdown-it对象：md.s_markdown, md => mavonEditor实例
     //                 or
     //                 mavonEditor.markdownIt 
@@ -21,13 +26,18 @@ import mavonEditor from 'mavon-editor'
 // 链接：https://www.jianshu.com/p/04376d0c9ff1
 // 來源：简书
 // 简书著作权归作者所有，任何形式的转载都请联系作者获得授权并注明出处。
+import vSelect from 'vue-select'
+import VueLodash from 'vue-lodash'
+
+const options = { name: '—' } // customize the way you want to call it
+
+Vue.use(VueLodash, options) // options is optional
 Vue.use(VueRouter);
 Vue.use(Vuex);
 
 Vue.use(iView);
 Vue.use(vuewResource);
-// Vue.use(Axios);
-
+Vue.component('v-select', vSelect)
 router.beforeEach((to, from, next) => {
   var token = localStorage.getItem("token");
   var title = '';
@@ -71,8 +81,7 @@ router.afterEach(() => {
   window.scrollTo(0, 0);
 });
 
-http.get('/api/commondata/get',null).then((res)=>{
-  debugger;
+http.get('/api/commondata/get',null, false).then((res)=>{
   const commonData = res.commonData;
   const store = new Vuex.Store({
     state: {
@@ -93,6 +102,5 @@ http.get('/api/commondata/get',null).then((res)=>{
     // render: h => h(App)
   });
 });
-
 
 
