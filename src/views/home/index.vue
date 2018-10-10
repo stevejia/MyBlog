@@ -17,7 +17,8 @@
                         关注
                     </MenuItem>
                     <MenuItem v-for="(item, index) in commonData.blogTypes" 
-                        :name="index + 4" 
+                        :name="index + 4"
+                        :key="'blogtype' + index"
                         @click.native="routeTo(item.router, item.value)">
                         {{item.text}}
                     </MenuItem>

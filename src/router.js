@@ -7,6 +7,7 @@ import article from '@/views/home/article';
 import signup from '@/views/account/signup';
 import writeBlog from '@/views/user/writeblog';
 import manageBackend from '@/views/backend/managebackend';
+import articleDetail from '@/views/home/detail';
 const routers = [
   {
     path: "/",
@@ -47,6 +48,18 @@ const routers = [
                 }
               }
 
+          },{
+            path: 'details/:id',
+            name: 'details',
+            component: articleDetail,
+            meta: {
+              title: '文章',
+            },
+            props: route => {
+              return {
+                id: route.params.id
+              }
+            }
           }]
         },
         {

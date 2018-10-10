@@ -2,15 +2,15 @@ import Vue from "vue";
 import iView from "iview";
 import VueRouter from "vue-router";
 import { router } from "./router";
-import Vuex from "vuex";
+import Vuex, { mapGetters } from "vuex";
 import {util} from "./libs/util";
 import App from "./app.vue";
 
 import vuewResource from "vue-resource";
 import {http} from '@/libs/http';
-// import $ from "jquery";
+import $ from "jquery";
 import 'bootstrap/dist/css/bootstrap.min.css' 
-// import 'bootstrap/dist/js/bootstrap.min'
+import 'bootstrap/dist/js/bootstrap.min'
 // import 'font-awesome/css/font-awesome.min.css'
 import "iview/dist/styles/iview.css";
 // import Axios from 'Axios';
@@ -21,7 +21,7 @@ import mavonEditor from 'mavon-editor';
     import 'mavon-editor/dist/css/index.css'
     // use
     Vue.use(mavonEditor)
-
+import {store} from './store';
 // 作者：hinesboy
 // 链接：https://www.jianshu.com/p/04376d0c9ff1
 // 來源：简书
@@ -81,24 +81,13 @@ router.afterEach(() => {
   window.scrollTo(0, 0);
 });
 
-http.get('/api/commondata/get',null, false).then((res)=>{
+let commonData = http.get('/api/commondata/get',null, false).then((res)=>{
   const commonData = res.commonData;
-  const store = new Vuex.Store({
-    state: {
-      commonData: commonData
-    },
-    getters: {
-      getCommonData: state=>{
-        return state.commonData;
-      }
-    },
-    mutations: {},
-    actions: {}
-  });
+  store.commit('setCommonData', commonData);
   new Vue({
     el: "#app",
     router: router,
-    store: store
+    store: store,
     // render: h => h(App)
   });
 });

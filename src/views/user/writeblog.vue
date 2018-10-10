@@ -9,7 +9,7 @@
                 <mavon-editor v-model="viewModel.content" placeholder="文章内容" :ishljs = "true"/>
             </FormItem>
             <FormItem label="文章标签" :label-width="80">
-                <span v-for="(item, index) in tags">
+                <span v-for="(item, index) in tags" :key="'tag'+index">
                     <Input class="small-input" v-model="item.value"></Input>
                     <Button icon="close" @click="removeTag(index)"></Button>
                 </span>
@@ -19,7 +19,7 @@
                 </Button>
             </FormItem>
             <FormItem label="个人分类" :label-width="80">
-                <span v-for="(item, index) in classifies">
+                <span v-for="(item, index) in classifies" :key="'classify'+index">
                     <Input class="small-input" v-model="item.value"></Input>
                     <Button icon="close" @click="removeClassify(index)"></Button>
                 </span>
@@ -28,7 +28,7 @@
                     添加新分类
                 </Button>
                 <Row>
-                    <Col span="12">
+                    <Col span="6">
                         <v-select style="margin-top: 10px;"></v-select>
                     </Col>
                 </Row>

@@ -23,3 +23,7 @@ ul, li{
 .form-control{
     height: auto!important;
 }
+
+.ivu-menu{
+    z-index: inherit!important;
+}
