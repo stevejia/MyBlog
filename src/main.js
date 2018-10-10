@@ -43,7 +43,7 @@ router.beforeEach((to, from, next) => {
   var title = '';
   if(!to.name && to.path=== '/'){
     router.replace({
-      path: "/sjblog/article/recommend",
+      path: "/sjblog/articles/recommend",
     });
     next();
   }

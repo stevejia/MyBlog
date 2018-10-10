@@ -25,7 +25,7 @@ const routers = [
         path: 'sjblog',
         component: main,
         children: [{
-          path: 'article',
+          path: 'articles',
           component: index,
           children: [
             {
