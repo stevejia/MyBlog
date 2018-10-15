@@ -74,7 +74,12 @@ export default {
         isPrivate: false,
         tag: "",
         classify: null,
-        isDraft: false
+        isDraft: false,
+        
+        readCount: Number,//阅读量
+        createTime: Date,//创建时间
+        isTop: Boolean,//是否置顶,
+        commentCount: Number,//评论数
       },
       tags: [],
       classifies:[],

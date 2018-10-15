@@ -36,11 +36,10 @@ async function post(path, params, needAuten = true, needLoading = false) {
     axios.defaults.headers.common['token'] = window.localStorage.getItem('token');
     axios.defaults.headers.common['needAuten'] = needAuten;
     try {
-        needLoading && Indicator.open();
-        let res = await axios.post(path, params);
-        return new Promise((resolve, reject)=>{
-            resolve(res.data);
-        });
+        needLoading && store.commit('showLoading');
+        let res = await axios.post(path,  params);
+        needLoading && store.commit('hideLoading');
+        return res.data;
     } catch (error) {
         if (error.response) {
             showStateError(error.response)
@@ -48,10 +47,9 @@ async function post(path, params, needAuten = true, needLoading = false) {
             showStateError(error)
         } else {
             alert(`服务器故障，请【稍后再试】或【联系管理员】`);
-            
         }
-    }finally{
-        needLoading && Indicator.close();
+    } finally{
+        needLoading && store.commit('hideLoading');
     }
 }
 
