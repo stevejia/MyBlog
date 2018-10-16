@@ -4,6 +4,16 @@
         <Icon type="load-c" size=18 class="demo-spin-icon-load"></Icon>
         <div>Loading</div>
     </Spin>
+    <Modal v-model="isShowMessageModal"
+            title="提示">
+        <div>
+            <p>{{message}}</p>
+            
+        </div>
+        <div slot="footer">
+            <Button type="primary" @click="close">确定</Button>
+        </div>
+    </Modal>
     <router-view></router-view>
 </div>
     
@@ -12,6 +22,7 @@
 <script>
 import {util} from "./libs/util";
 import {mapState} from 'vuex'
+import {store} from '@/store'
 const len = 5;
 export default {
   data() {
@@ -26,11 +37,15 @@ export default {
   },
   beforeDestroy() {},
   methods: {
-    
+    close(){
+        store.commit('hideModal');
+    }
   },
   computed:{
       ...mapState([
-          'loading'
+          'loading',
+          'isShowMessageModal',
+          'message'
       ])
   },
 };

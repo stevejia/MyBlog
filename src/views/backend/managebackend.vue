@@ -98,7 +98,7 @@ export default {
     },
     methods: {
         addSystemConfig(){
-            http.post('/api/basicdata/save', this.viewModel).then(res=>{
+            http.post('/basicdata/save', this.viewModel).then(res=>{
                 console.log('Successful!');
             });
 

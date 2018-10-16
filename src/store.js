@@ -4,7 +4,9 @@ Vue.use(Vuex);
 export const store = new Vuex.Store({
   state: {
     commonData: {},
-    loading: false
+    loading: false,
+    isShowMessageModal: false,
+    message: '',
   },
   getters: {
     getCommonData: state => {
@@ -21,6 +23,14 @@ export const store = new Vuex.Store({
     },
     setCommonData(state, data){
         state.commonData = data;
-    }
+    },
+    showModal(state, message){
+      state.isShowMessageModal = true;
+      state.message = message;
+    },
+    hideModal(state){
+      state.isShowMessageModal = false;
+      state.message = '';
+    },
   }
 });

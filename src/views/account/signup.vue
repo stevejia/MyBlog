@@ -56,7 +56,7 @@
                             name: this.formCustom.userName,
                             password: this.formCustom.password,
                         };
-                        http.post('/api/account/register',userInfo ).then(res=>{
+                        http.post('user/register',userInfo, false ).then(res=>{
                             this.$router.push("/login");
                         });
                     }

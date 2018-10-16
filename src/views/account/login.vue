@@ -53,7 +53,7 @@ export default {
         name: this.loginModel.userName,
         password: this.loginModel.password
       };
-      http.post('/api/account/login', loginInfo, false).then(res=>{
+      http.post('/user/login', loginInfo, false).then(res=>{
         let token = res.token;
         localStorage.setItem('token', token);
         this.$router.push({

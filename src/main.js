@@ -81,7 +81,7 @@ router.afterEach(() => {
   window.scrollTo(0, 0);
 });
 
-let commonData = http.get('/api/commondata/get',null, false).then((res)=>{
+let commonData = http.get('/system/getcommondata',null, false).then((res)=>{
   const commonData = res.commonData;
   store.commit('setCommonData', commonData);
   new Vue({
