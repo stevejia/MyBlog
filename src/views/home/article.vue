@@ -4,15 +4,19 @@
       <Card>
         <div slot="title">
           <Avatar icon="ios-person" size="large" />
-          <span style="margin-left: 10px;">test</span>
+          <span style="margin-left: 10px;">{{vm.user.name}}</span>
           <Button class="pull-right" type="dashed">私信</Button>
           <Button class="pull-right" type="dashed">关注</Button>
         </div>
         <div style="margin: 0 -16px; padding: 5px 16px; border-bottom: 1px solid #e8eaec;">
           <Row>
             <Col span="4" style="width: 20%; text-align: center;">
-              <div>原创</div>
-              <b>1</b>
+              <router-link
+                :to="{path: `/blog/article/list/${vm.user.id}`, query: {articleType: 1}}"
+              >
+                <div>原创</div>
+                <b>{{vm.originalCount}}</b>
+              </router-link>
             </Col>
             <Col span="4" style="width: 20%; text-align: center;">
               <div>粉丝</div>
@@ -62,37 +66,13 @@
           <span>最新文章</span>
         </div>
         <div>
-          <List>
+          <List v-for="(item, index) in vm.newestArticles" :key="index">
             <ListItem>
               <router-link
-                to="/"
+                :to="{path: `/blog/article/detail/${item.id}`}"
                 style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-              >This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg</router-link>
-            </ListItem>
-            <ListItem>
-              <router-link
-                to="/"
-                style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
-              >This is a piece of text.</router-link>
-            </ListItem>
-            <ListItem>
-              <router-link
-                to="/"
-                style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
-              >This is a piece of text.</router-link>
-            </ListItem>
-            <ListItem>
-              <router-link
-                to="/"
-                style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
-              >This is a piece of text.</router-link>
-            </ListItem>
-            <ListItem>
-              <router-link
-                to="/"
-                style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
-              >This is a piece of text.</router-link>
+                :title="item.title"
+              >{{item.title}}</router-link>
             </ListItem>
           </List>
         </div>
@@ -419,7 +399,26 @@ export default {
     type: Number | String
   },
   data() {
-    return {};
+    return {
+      vm: {
+        newestArticles: [],
+        originalCount: null,
+        user: {}
+      }
+    };
+  },
+  async mounted() {
+    if (!!this.$route.params.id) {
+      this.vm = await http.get("account/getByArticleId", {
+        id: this.$route.params.id
+      });
+    }
+    if (!!this.$route.params.userId) {
+      this.vm = await http.get("account/getById", {
+        id: this.$route.params.userId
+      });
+    }
+    console.log(this.$route.params.id);
   },
   methods: {
     onExpandClasify(isExpand) {

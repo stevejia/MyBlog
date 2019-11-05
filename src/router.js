@@ -9,6 +9,7 @@ import signup from "@/views/account/signup";
 import writeBlog from "@/views/user/writeblog";
 import manageBackend from "@/views/backend/managebackend";
 import articleDetail from "@/views/home/detail";
+import articleList from "@/views/home/list";
 
 const loginRouter = {
   path: "/login",
@@ -58,6 +59,14 @@ const routers = [
                 component: articleDetail,
                 meta: {
                   title: "文章详情"
+                }
+              },
+              {
+                path: "list/:userId",
+                name: "list",
+                component: articleList,
+                meta: {
+                  title: "文章列表"
                 }
               }
             ]

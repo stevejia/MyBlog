@@ -42,14 +42,12 @@ export default {
     };
   },
   mounted() {
-    http
-      .get("articles/get", { id: this.$route.params.id }, false, true)
-      .then(res => {
-        res.item.htmlContent = marked(res.item.content);
-        this.item = res.item;
-      });
+    this.getArticle();
   },
   computed: {
+    articleId() {
+      return this.$route.params.id;
+    },
     articleType() {
       let at =
         find(this.commonData.articleTypes, d => {
@@ -62,6 +60,22 @@ export default {
     },
     updateTime() {
       return util.formatDate(this.item.updateTime, "YYYY-MM-DD HH:mm:ss");
+    }
+  },
+  watch: {
+    articleId(newVal) {
+      if (!!newVal) {
+        this.getArticle(newVal);
+      }
+    }
+  },
+  methods: {
+    getArticle(id) {
+      id = id || this.$route.params.id;
+      http.get("articles/get", { id }, false, true).then(res => {
+        res.item.htmlContent = marked(res.item.content);
+        this.item = res.item;
+      });
     }
   }
 };

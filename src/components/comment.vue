@@ -1,6 +1,5 @@
 <template>
   <div>
-    <span>{{id}}</span>
     <div style="padding-left: 42px; position: relative; margin-bottom: 10px;">
       <Avatar class="avatar_small" icon="ios-person" size="small" />
       <Input
@@ -13,10 +12,10 @@
         :placeholder="placeholder"
       />
     </div>
-    <div style="position: relative; min-height: 32px;">
+    <div v-show="!!comment.content" style="position: relative; min-height: 32px;">
       <span style="position: absolute; right: 0;">
-        <Button v-show="!!comment.content" @click.prevent.stop="onCancelComment">取消回复</Button>
-        <Button v-show="!!comment.content" type="primary" @click="onSubmitComment">发表评论</Button>
+        <Button @click.prevent.stop="onCancelComment">取消回复</Button>
+        <Button type="primary" @click="onSubmitComment">发表评论</Button>
       </span>
     </div>
     <Reply :list="commentList" @onComment="onBeforeComment"></Reply>
@@ -75,9 +74,7 @@ export default {
     };
   },
   mounted() {
-    http.get("articles/listcomments", { id: this.id }).then(res => {
-      this.commentList = res.list;
-    });
+    this.listComments();
   },
   computed: {
     placeholder() {
@@ -88,6 +85,11 @@ export default {
     }
   },
   methods: {
+    listComments() {
+      http.get("articles/listcomments", { id: this.id }).then(res => {
+        this.commentList = res.list;
+      });
+    },
     onMouseOver(item) {
       item.show = true;
     },
@@ -98,23 +100,26 @@ export default {
       item.onShowReplies = true;
     },
     onCancelComment() {
+      this.resetComment();
+    },
+    resetComment() {
       this.comment.content = null;
       this.comment.replyUserId = null;
       this.comment.replyUserName = null;
       this.comment.parentId = null;
     },
     onBeforeComment(item) {
-      console.log(item);
       this.$nextTick(() => {
         this.$refs["commentInput"].focus();
       });
       this.comment.replyUserId = item.userId;
       this.comment.replyUserName = item.userName;
-      this.comment.parentId = item.parentId || item.userId;
+      this.comment.parentId = item.parentId || item.id;
     },
     async onSubmitComment() {
-      let result = await http.post("articles/savecomment", { ...this.comment });
-      console.log(result);
+      await http.post("articles/savecomment", { ...this.comment });
+      this.listComments();
+      this.resetComment();
     }
   }
 };

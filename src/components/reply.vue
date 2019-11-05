@@ -65,7 +65,7 @@ export default {
 .root {
   padding: 20px 20px 20px 42px;
   position: relative;
-  border-bottom: 1px dashed;
+  border-bottom: 1px dashed #e0e0e0;
 }
 .child {
   padding: 20px 0 20px 42px;

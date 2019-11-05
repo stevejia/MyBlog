@@ -9,4 +9,4 @@ const utilMethod = {
   }
 };
 
-export let util = utilMethod;
+export let util = { ...utilMethod };
