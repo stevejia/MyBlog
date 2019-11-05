@@ -1,11 +1,12 @@
-import axios from "axios";
-import env from "../config/env";
-import router from "../router";
-import VueRouter from "vue-router";
-
-const setTitle = function(title) {
-  title = title ? title : "世秋的博客-Facynato";
-  window.document.title = title;
+import moment from "moment";
+const utilMethod = {
+  setTitle(title) {
+    title = title ? title : "小迷妹的博客";
+    window.document.title = title;
+  },
+  formatDate(date, format = "YYYY-MM-DD") {
+    return moment(date).format(format);
+  }
 };
 
-export let util = { setTitle };
+export let util = utilMethod;
