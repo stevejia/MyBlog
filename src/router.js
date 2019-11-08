@@ -78,6 +78,14 @@ const routers = [
             meta: {
               title: "写博客"
             }
+          },
+          {
+            path: "signup",
+            name: "signup",
+            meta: {
+              title: "注册"
+            },
+            component: signup
           }
           // ...subRoutes
         ]

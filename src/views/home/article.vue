@@ -5,8 +5,15 @@
         <div slot="title">
           <Avatar icon="ios-person" size="large" />
           <span style="margin-left: 10px;">{{vm.user.name}}</span>
-          <Button class="pull-right" type="dashed">私信</Button>
-          <Button class="pull-right" type="dashed">关注</Button>
+          <Button class="pull-right" type="dashed" @click="sendPrivateLetter">私信</Button>
+          <Button class="pull-right" type="dashed" @click="follow" v-show="notFollow">关注</Button>
+          <Button
+            class="pull-right"
+            type="dashed"
+            style="border-color: #ca0c16"
+            @click="unFollow"
+            v-show="!notFollow"
+          >取消关注</Button>
         </div>
         <div style="margin: 0 -16px; padding: 5px 16px; border-bottom: 1px solid #e8eaec;">
           <Row>
@@ -20,7 +27,7 @@
             </Col>
             <Col span="4" style="width: 20%; text-align: center;">
               <div>粉丝</div>
-              <b>2</b>
+              <b>{{vm.userSubList.length}}</b>
             </Col>
             <Col span="4" style="width: 20%; text-align: center;">
               <div>获赞</div>
@@ -403,26 +410,62 @@ export default {
       vm: {
         newestArticles: [],
         originalCount: null,
-        user: {}
-      }
+        user: {},
+        userSubList: []
+      },
+      followerName: localStorage.getItem("userName"),
+      followerId: localStorage.getItem("userId")
     };
   },
-  async mounted() {
-    if (!!this.$route.params.id) {
-      this.vm = await http.get("account/getByArticleId", {
-        id: this.$route.params.id
+  mounted() {
+    this.fetchData();
+  },
+  computed: {
+    notFollow() {
+      let userId = localStorage.getItem("userId");
+      let subscribe = this.vm.userSubList.find(d => {
+        return d.followerId == userId;
       });
+      return !subscribe;
     }
-    if (!!this.$route.params.userId) {
-      this.vm = await http.get("account/getById", {
-        id: this.$route.params.userId
-      });
-    }
-    console.log(this.$route.params.id);
   },
   methods: {
+    async fetchData() {
+      if (!!this.$route.params.id) {
+        this.vm = await http.get("account/getByArticleId", {
+          id: this.$route.params.id
+        });
+      }
+      if (!!this.$route.params.userId) {
+        this.vm = await http.get("account/getById", {
+          id: this.$route.params.userId
+        });
+      }
+    },
     onExpandClasify(isExpand) {
       console.log(isExpand);
+    },
+    async follow() {
+      let subscribeDto = {
+        userId: this.vm.user.id,
+        followerName: this.followerName,
+        followerId: this.followerId
+      };
+      await http.post("account/follow", subscribeDto);
+      this.fetchData();
+    },
+    async unFollow() {
+      let followerId = this.followerId;
+      let id = (
+        this.vm.userSubList.find(d => {
+          return d.followerId == followerId;
+        }) || {}
+      ).id;
+      await http.post("account/unfollow", { id });
+      this.fetchData();
+    },
+    sendPrivateLetter() {
+      alert("Not Implement Yet!!!!");
     }
   }
 };

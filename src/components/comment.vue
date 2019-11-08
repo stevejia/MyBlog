@@ -84,6 +84,11 @@ export default {
       return `回复：${this.comment.replyUserName}`;
     }
   },
+  watch: {
+    id(newVal) {
+      this.listComments();
+    }
+  },
   methods: {
     listComments() {
       http.get("articles/listcomments", { id: this.id }).then(res => {
