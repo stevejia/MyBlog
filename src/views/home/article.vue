@@ -15,7 +15,7 @@
             v-show="!notFollow"
           >取消关注</Button>
         </div>
-        <div style="margin: 0 -16px; padding: 5px 16px; border-bottom: 1px solid #e8eaec;">
+        <div style="margin: 0 -16px; padding: 5px 16px;">
           <Row>
             <Col span="4" style="width: 20%; text-align: center;">
               <router-link
@@ -43,7 +43,7 @@
             </Col>
           </Row>
         </div>
-        <div style="margin: 0 -16px; padding: 5px 16px;">
+        <!-- <div style="margin: 0 -16px; padding: 5px 16px;">
           <Row>
             <Col span="12">
               <span>等级</span>
@@ -66,7 +66,7 @@
               <b>5</b>
             </Col>
           </Row>
-        </div>
+        </div> -->
       </Card>
       <Card>
         <div slot="title">

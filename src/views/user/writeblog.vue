@@ -11,19 +11,19 @@
       <FormItem label="文章标签" :label-width="80">
         <span v-for="(item, index) in tags" :key="'tag'+index">
           <Input class="small-input" v-model="item.value"></Input>
-          <Button icon="close" @click="removeTag(index)"></Button>
+          <Button icon="md-close" @click="removeTag(index)"></Button>
         </span>
         <Button @click="addTag()" v-if="tags.length < 5">
-          <Icon type="plus"></Icon>添加标签
+          <Icon type="md-add"></Icon>添加标签
         </Button>
       </FormItem>
       <FormItem label="个人分类" :label-width="80">
         <span v-for="(item, index) in classifies" :key="'classify'+index">
           <Input class="small-input" v-model="item.value"></Input>
-          <Button icon="close" @click="removeClassify(index)"></Button>
+          <Button icon="md-close" @click="removeClassify(index)"></Button>
         </span>
         <Button @click="addClassify()" v-if="classifies.length < 3">
-          <Icon type="plus"></Icon>添加新分类
+          <Icon type="md-add"></Icon>添加新分类
         </Button>
       </FormItem>
       <Row>
