@@ -3,15 +3,29 @@
     <Card :bordered="false">
       <div slot="title">
         <div class="inline-block">
-          <span class="article-type inline-block" v-if="articleType !== null">{{articleType}}</span>
-          <h1 class="inline-block">{{item.title}}</h1>
+          <span class="article-type inline-block" v-if="articleType !== null">{{
+            articleType
+          }}</span>
+          <h1 class="inline-block">{{ item.title }}</h1>
         </div>
         <div style="padding: 10px 0;">
-          <span style="font-size: 16px; margin-right: 20px;">{{createTime}}</span>
+          <span style="font-size: 16px; margin-right: 20px;">{{
+            createTime
+          }}</span>
           <router-link to="/">
-            <span style="font-size: 16px;">{{item.creator}}</span>
+            <span style="font-size: 16px;">{{ item.creator }}</span>
           </router-link>
-          <span style="font-size: 16px; margin-right: 20px;">阅读数{{item.viewCount}}</span>
+          <span style="font-size: 16px; margin-right: 20px;"
+            >阅读数{{ item.viewCount }}</span
+          >
+          <span>文章标签：</span>
+          <Alert
+            v-for="(tag, index) in item.tags"
+            :key="index"
+            type="success"
+            style="display: inline; padding: 4px 8px; margin-right: 10px;"
+            >{{ tag.value }}</Alert
+          >
           <!-- <span v-if="!!item.updateTime">更新时间{{updateTime}}</span> -->
         </div>
       </div>
@@ -94,5 +108,3 @@ export default {
   display: inline-block;
 }
 </style>
-
-

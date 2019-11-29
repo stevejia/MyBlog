@@ -4,30 +4,42 @@
       <Card>
         <div slot="title">
           <Avatar icon="ios-person" size="large" />
-          <span style="margin-left: 10px;">{{vm.user.name}}</span>
-          <Button class="pull-right" type="dashed" @click="sendPrivateLetter">私信</Button>
-          <Button class="pull-right" type="dashed" @click="follow" v-show="notFollow">关注</Button>
+          <span style="margin-left: 10px;">{{ vm.user.name }}</span>
+          <Button class="pull-right" type="dashed" @click="sendPrivateLetter"
+            >私信</Button
+          >
+          <Button
+            class="pull-right"
+            type="dashed"
+            @click="follow"
+            v-show="notFollow"
+            >关注</Button
+          >
           <Button
             class="pull-right"
             type="dashed"
             style="border-color: #ca0c16"
             @click="unFollow"
             v-show="!notFollow"
-          >取消关注</Button>
+            >取消关注</Button
+          >
         </div>
         <div style="margin: 0 -16px; padding: 5px 16px;">
           <Row>
             <Col span="4" style="width: 20%; text-align: center;">
               <router-link
-                :to="{path: `/blog/article/list/${vm.user.id}`, query: {articleType: 1}}"
+                :to="{
+                  path: `/blog/article/list/${vm.user.id}`,
+                  query: { articleType: 1 }
+                }"
               >
                 <div>原创</div>
-                <b>{{vm.originalCount}}</b>
+                <b>{{ vm.originalCount }}</b>
               </router-link>
             </Col>
             <Col span="4" style="width: 20%; text-align: center;">
               <div>粉丝</div>
-              <b>{{vm.userSubList.length}}</b>
+              <b>{{ vm.userSubList.length }}</b>
             </Col>
             <Col span="4" style="width: 20%; text-align: center;">
               <div>获赞</div>
@@ -76,10 +88,11 @@
           <List v-for="(item, index) in vm.newestArticles" :key="index">
             <ListItem>
               <router-link
-                :to="{path: `/blog/article/detail/${item.id}`}"
+                :to="{ path: `/blog/article/detail/${item.id}` }"
                 style="text-overflow: ellipsis;white-space: nowrap;overflow: hidden;"
                 :title="item.title"
-              >{{item.title}}</router-link>
+                >{{ item.title }}</router-link
+              >
             </ListItem>
           </List>
         </div>
@@ -89,62 +102,23 @@
           <span>分类专栏</span>
         </div>
         <div>
-          <List>
+          <List v-for="(item, index) in vm.userClassifies" :key="index">
             <ListItem>
               <router-link
-                to="/"
+                :to="{
+                  path: `/blog/article/list/${vm.user.id}`,
+                  query: { classify: item.id }
+                }"
                 style="width: 100%;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
+                :title="item.value"
               >
                 <Avatar shape="square" icon="ios-person" />
-                <span style="line-height: 32px;">分类1</span>
-                <span class="pull-right" style="line-height: 32px; font-size: 12px;">3篇</span>
-              </router-link>
-            </ListItem>
-            <ListItem>
-              <router-link
-                to="/"
-                style="width: 100%;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-              >
-                <div>
-                  <Avatar shape="square" icon="ios-person" />
-                  <span style="line-height: 32px;">分类1</span>
-                  <span class="pull-right" style="line-height: 32px; font-size: 12px;">3篇</span>
-                </div>
-              </router-link>
-            </ListItem>
-            <ListItem>
-              <router-link
-                to="/"
-                style="width: 100%;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-              >
-                <Avatar shape="square" icon="ios-person" />
-                <span style="line-height: 32px;">分类1</span>
-                <span class="pull-right" style="line-height: 32px; font-size: 12px;">3篇</span>
-              </router-link>
-            </ListItem>
-            <ListItem>
-              <router-link
-                to="/"
-                style="width: 100%;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-              >
-                <Avatar shape="square" icon="ios-person" />
-                <span style="line-height: 32px;">分类1</span>
-                <span class="pull-right" style="line-height: 32px; font-size: 12px;">3篇</span>
-              </router-link>
-            </ListItem>
-            <ListItem>
-              <router-link
-                to="/"
-                style="width: 100%;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-              >
-                <Avatar shape="square" icon="ios-person" />
-                <span style="line-height: 32px;">分类1</span>
-                <span class="pull-right" style="line-height: 32px; font-size: 12px;">3篇</span>
+                <span style="line-height: 32px;">{{ item.value }}</span>
+                <span
+                  class="pull-right"
+                  style="line-height: 32px; font-size: 12px;"
+                  >{{ item.articleCount }}篇</span
+                >
               </router-link>
             </ListItem>
           </List>
@@ -158,85 +132,23 @@
           <span>最新评论</span>
         </div>
         <div>
-          <List>
+          <List v-for="(item, index) in vm.newestComments" :key="index">
             <ListItem style="padding-bottom: 0!important;">
               <div style="width: 100%;">
                 <router-link
-                  to="/"
-                  :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-                >This is a piece of text</router-link>
+                  :to="{ path: `/blog/article/detail/${item.articleId}` }"
+                  :title="item.title"
+                  >{{ item.title }}</router-link
+                >
               </div>
             </ListItem>
             <ListItem>
               <span
                 style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;width: 100%;"
               >
-                <span>用户1</span>:
-                <span>我认为阿看到房间爱丽丝的看法就爱了独守空房敬爱的拉萨市两地分居阿里独守空房骄傲了时代峰峻阿萨德六块腹肌</span>
-              </span>
-            </ListItem>
-            <ListItem style="padding-bottom: 0!important;">
-              <div style="width: 100%;">
-                <router-link
-                  to="/"
-                  :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-                >This is a piece of text</router-link>
-              </div>
-            </ListItem>
-            <ListItem>
-              <span
-                style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;width: 100%;"
-              >
-                <span>用户1</span>:
-                <span>我认为阿看到房间爱丽丝的看法就爱了独守空房敬爱的拉萨市两地分居阿里独守空房骄傲了时代峰峻阿萨德六块腹肌</span>
-              </span>
-            </ListItem>
-            <ListItem style="padding-bottom: 0!important;">
-              <div style="width: 100%;">
-                <router-link
-                  to="/"
-                  :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-                >This is a piece of text</router-link>
-              </div>
-            </ListItem>
-            <ListItem>
-              <span
-                style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;width: 100%;"
-              >
-                <span>用户1</span>:
-                <span>我认为阿看到房间爱丽丝的看法就爱了独守空房敬爱的拉萨市两地分居阿里独守空房骄傲了时代峰峻阿萨德六块腹肌</span>
-              </span>
-            </ListItem>
-            <ListItem style="padding-bottom: 0!important;">
-              <div style="width: 100%;">
-                <router-link
-                  to="/"
-                  :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-                >This is a piece of text</router-link>
-              </div>
-            </ListItem>
-            <ListItem>
-              <span
-                style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;width: 100%;"
-              >
-                <span>用户1</span>:
-                <span>我认为阿看到房间爱丽丝的看法就爱了独守空房敬爱的拉萨市两地分居阿里独守空房骄傲了时代峰峻阿萨德六块腹肌</span>
-              </span>
-            </ListItem>
-            <ListItem style="padding-bottom: 0!important;">
-              <div style="width: 100%;">
-                <router-link
-                  to="/"
-                  :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-                >This is a piece of text</router-link>
-              </div>
-            </ListItem>
-            <ListItem>
-              <span
-                style="overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;width: 100%;"
-              >
-                <span>用户1</span>:
-                <span>我认为阿看到房间爱丽丝的看法就爱了独守空房敬爱的拉萨市两地分居阿里独守空房骄傲了时代峰峻阿萨德六块腹肌</span>
+                <span>{{ item.userName }}</span
+                >:
+                <span>{{ item.content }}</span>
               </span>
             </ListItem>
           </List>
@@ -252,21 +164,33 @@
               <router-link
                 to="/"
                 style="width: 100%;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
+                :title="
+                  'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+                "
               >
                 <span style="line-height: 32px;">2019年11月</span>
-                <span class="pull-right" style="line-height: 32px; font-size: 12px;">1篇</span>
+                <span
+                  class="pull-right"
+                  style="line-height: 32px; font-size: 12px;"
+                  >1篇</span
+                >
               </router-link>
             </ListItem>
             <ListItem>
               <router-link
                 to="/"
                 style="width: 100%;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
+                :title="
+                  'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+                "
               >
                 <div>
                   <span style="line-height: 32px;">2019年11月</span>
-                  <span class="pull-right" style="line-height: 32px; font-size: 12px;">1篇</span>
+                  <span
+                    class="pull-right"
+                    style="line-height: 32px; font-size: 12px;"
+                    >1篇</span
+                  >
                 </div>
               </router-link>
             </ListItem>
@@ -274,30 +198,48 @@
               <router-link
                 to="/"
                 style="width: 100%;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
+                :title="
+                  'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+                "
               >
                 <span style="line-height: 32px;">2019年11月</span>
-                <span class="pull-right" style="line-height: 32px; font-size: 12px;">1篇</span>
+                <span
+                  class="pull-right"
+                  style="line-height: 32px; font-size: 12px;"
+                  >1篇</span
+                >
               </router-link>
             </ListItem>
             <ListItem>
               <router-link
                 to="/"
                 style="width: 100%;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
+                :title="
+                  'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+                "
               >
                 <span style="line-height: 32px;">2019年11月</span>
-                <span class="pull-right" style="line-height: 32px; font-size: 12px;">1篇</span>
+                <span
+                  class="pull-right"
+                  style="line-height: 32px; font-size: 12px;"
+                  >1篇</span
+                >
               </router-link>
             </ListItem>
             <ListItem>
               <router-link
                 to="/"
                 style="width: 100%;"
-                :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
+                :title="
+                  'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+                "
               >
                 <span style="line-height: 32px;">2019年11月</span>
-                <span class="pull-right" style="line-height: 32px; font-size: 12px;">1篇</span>
+                <span
+                  class="pull-right"
+                  style="line-height: 32px; font-size: 12px;"
+                  >1篇</span
+                >
               </router-link>
             </ListItem>
           </List>
@@ -316,8 +258,11 @@
               <div style="width: 100%;">
                 <router-link
                   to="/"
-                  :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-                >This is a piece of text</router-link>
+                  :title="
+                    'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+                  "
+                  >This is a piece of text</router-link
+                >
               </div>
             </ListItem>
             <ListItem>
@@ -330,8 +275,11 @@
               <div style="width: 100%;">
                 <router-link
                   to="/"
-                  :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-                >This is a piece of text</router-link>
+                  :title="
+                    'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+                  "
+                  >This is a piece of text</router-link
+                >
               </div>
             </ListItem>
             <ListItem>
@@ -344,8 +292,11 @@
               <div style="width: 100%;">
                 <router-link
                   to="/"
-                  :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-                >This is a piece of text</router-link>
+                  :title="
+                    'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+                  "
+                  >This is a piece of text</router-link
+                >
               </div>
             </ListItem>
             <ListItem>
@@ -358,8 +309,11 @@
               <div style="width: 100%;">
                 <router-link
                   to="/"
-                  :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-                >This is a piece of text</router-link>
+                  :title="
+                    'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+                  "
+                  >This is a piece of text</router-link
+                >
               </div>
             </ListItem>
             <ListItem>
@@ -372,8 +326,11 @@
               <div style="width: 100%;">
                 <router-link
                   to="/"
-                  :title="'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'"
-                >This is a piece of text</router-link>
+                  :title="
+                    'This is a piece of text.gggggggggggggggggggggggggggggggggggggggggggggggggggggggg'
+                  "
+                  >This is a piece of text</router-link
+                >
               </div>
             </ListItem>
             <ListItem>
@@ -411,7 +368,9 @@ export default {
         newestArticles: [],
         originalCount: null,
         user: {},
-        userSubList: []
+        userSubList: [],
+        userClassifies: [],
+        newestComments: []
       },
       followerName: localStorage.getItem("userName"),
       followerId: localStorage.getItem("userId")
@@ -495,5 +454,3 @@ export default {
   padding-top: 0 !important;
 }
 </style>
-
-

@@ -1,23 +1,25 @@
 <template>
   <div>
-    <Card v-for="(item, index) in list" :key="'article'+index">
+    <Card v-for="(item, index) in list" :key="'article' + index">
       <p slot="title">
         <router-link
           class="logo inline"
-          :to="{path: `/blog/article/detail/${item.id}`}"
-        >{{item.title}}</router-link>
+          :to="{ path: `/blog/article/detail/${item.id}` }"
+          >{{ item.title }}</router-link
+        >
       </p>
       <p style="padding: 20px;" v-html="item.htmlContent"></p>
       <div style="line-height: 32px;height: 32px;">
         <span class="pull-right">
-          <span>{{formatDate(item.createTime, "YYYY-MM-DD HH:mm:ss")}}</span>&nbsp;|&nbsp;
+          <span>{{ formatDate(item.createTime, "YYYY-MM-DD HH:mm:ss") }}</span
+          >&nbsp;|&nbsp;
           <a @click="onThumb(item)">
             <Icon style="font-size: 16px" type="ios-eye-outline" />
-            {{item.viewCount || 0}}
-          </a>&nbsp;|&nbsp;
+            {{ item.viewCount || 0 }} </a
+          >&nbsp;|&nbsp;
           <a @click="onThumb(item)">
             <Icon style="font-size: 16px" type="ios-text-outline" />
-            {{item.commentsCount || 0}}
+            {{ item.commentsCount || 0 }}
           </a>
         </span>
       </div>
@@ -30,20 +32,37 @@ import { util } from "@/libs/util";
 import marked from "marked";
 import _ from "lodash";
 export default {
+  props: {
+    articleType: {
+      type: String | Number
+    },
+    classify: {
+      type: String | Number
+    }
+  },
   data() {
     return {
       list: []
     };
   },
+  watch: {
+    articleType(newVal) {
+      this.listArticle();
+    },
+    classify(newVal) {
+      this.listArticle();
+    }
+  },
   mounted() {
-    this.listArticle();
+    // this.listArticle();
   },
   methods: {
     async listArticle(userId) {
       userId = userId || this.$route.params.userId;
       let result = await http.get("articles/list", {
         creatorId: userId,
-        articleType: this.$route.query.articleType
+        articleType: this.$route.query.articleType,
+        classify: this.$route.query.classify
       });
       _.forEach(result.list, d => {
         d.htmlContent = marked(d.content);

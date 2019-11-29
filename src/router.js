@@ -7,7 +7,6 @@ import articles from "@/views/home/articles";
 import article from "@/views/home/article";
 import signup from "@/views/account/signup";
 import writeBlog from "@/views/user/writeblog";
-import manageBackend from "@/views/backend/managebackend";
 import articleDetail from "@/views/home/detail";
 import articleList from "@/views/home/list";
 
@@ -65,6 +64,9 @@ const routers = [
                 path: "list/:userId",
                 name: "list",
                 component: articleList,
+                props: route => {
+                  return { ...route.query };
+                },
                 meta: {
                   title: "文章列表"
                 }

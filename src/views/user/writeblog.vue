@@ -1,4 +1,3 @@
-
 <template>
   <div class="write-container">
     <Form :model="viewModel" label-position="left">
@@ -6,19 +5,23 @@
         <Input v-model="viewModel.title" placeholder="文章标题"></Input>
       </FormItem>
       <FormItem>
-        <mavon-editor v-model="viewModel.content" placeholder="文章内容" :ishljs="true" />
+        <mavon-editor
+          v-model="viewModel.content"
+          placeholder="文章内容"
+          :ishljs="true"
+        />
       </FormItem>
       <FormItem label="文章标签" :label-width="80">
-        <span v-for="(item, index) in tags" :key="'tag'+index">
+        <span v-for="(item, index) in viewModel.tags" :key="'tag' + index">
           <Input class="small-input" v-model="item.value"></Input>
           <Button icon="md-close" @click="removeTag(index)"></Button>
         </span>
-        <Button @click="addTag()" v-if="tags.length < 5">
+        <Button @click="addTag()" v-if="viewModel.tags.length < 5">
           <Icon type="md-add"></Icon>添加标签
         </Button>
       </FormItem>
       <FormItem label="个人分类" :label-width="80">
-        <span v-for="(item, index) in classifies" :key="'classify'+index">
+        <span v-for="(item, index) in classifies" :key="'classify' + index">
           <Input class="small-input" v-model="item.value"></Input>
           <Button icon="md-close" @click="removeClassify(index)"></Button>
         </span>
@@ -34,7 +37,8 @@
                 v-for="item in commonData.articleTypes"
                 :value="item.value"
                 :key="item.value"
-              >{{ item.text }}</Option>
+                >{{ item.text }}</Option
+              >
             </Select>
           </FormItem>
         </Col>
@@ -46,7 +50,8 @@
                 v-for="item in commonData.blogTypes"
                 :value="item.value"
                 :key="item.value"
-              >{{ item.text }}</Option>
+                >{{ item.text }}</Option
+              >
             </Select>
           </FormItem>
         </Col>
@@ -82,9 +87,10 @@ export default {
         createTime: null, //创建时间
         isTop: Boolean, //是否置顶,
         commentsCount: 0, //评论数
-        thumbCount: 0
+        thumbCount: 0,
+        tags: [],
+        classifies: []
       },
-      tags: [],
       classifies: [],
       commonData: this.$store.getters.getCommonData
     };
@@ -102,20 +108,20 @@ export default {
   },
   methods: {
     removeTag(index) {
-      var tags = _.filter(this.tags, (d, idx) => {
+      var tags = _.filter(this.viewModel.tags, (d, idx) => {
         return index !== idx;
       });
-      this.tags = tags;
+      this.viewModel.tags = tags;
     },
     addTag() {
-      if (this.tags.length === 5) {
+      if (this.viewModel.tags.length === 5) {
         alert("最多添加5个标签");
         return;
       }
       let newItem = {
         value: null
       };
-      this.tags.push(newItem);
+      this.viewModel.tags.push(newItem);
     },
     removeClassify(index) {
       var classifies = _.filter(this.classifies, (d, idx) => {
@@ -124,20 +130,23 @@ export default {
       this.classifies = classifies;
     },
     addClassify() {
+      let creatorId = localStorage.getItem("userId");
       let newItem = {
-        value: null
+        value: null,
+        userId: creatorId
       };
       this.classifies.push(newItem);
     },
     saveArticle(isDraft) {
       this.viewModel.isDraft = isDraft;
-      var tags = [];
-      _.forEach(this.tags, d => {
-        if (d.value) {
-          tags.push(d.value);
-        }
-      });
-      this.viewModel.tag = tags.join(",");
+      // var tags = [];
+      // _.forEach(this.viewModel.tags, d => {
+      //   if (d.value) {
+      //     tags.push(d.value);
+      //   }
+      // });
+      // this.viewModel.tag = tags.join(",");
+      this.viewModel.classifies = [...this.classifies];
       http.post("articles/save", this.viewModel).then(res => {
         if (!res.message) {
           console.log("successfully!");
@@ -155,5 +164,3 @@ export default {
   width: 60px !important;
 }
 </style>
-
-
